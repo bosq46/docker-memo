@@ -1,0 +1,28 @@
+version: '3'
+services:
+  redis01:
+    image: redis:6.2.6
+    volumes:
+      - "./conf:/etc/redis"
+    command: "/etc/redis/redis.conf"
+  redis02:
+    image: redis:6.2.6
+    volumes:
+      - "./conf2:/etc/redis"
+    command: "/etc/redis/redis.conf"
+    depends_on:
+      - redis01
+  redis03:
+    image: redis:6.2.6
+    volumes:
+      - "./conf3:/etc/redis"
+    command: "/etc/redis/redis.conf"
+    depends_on:
+      - redis02
+  redis04:
+    image: redis:6.2.6
+    volumes:
+      - "./conf4:/etc/redis"
+    command: "/etc/redis/redis.conf"
+    depends_on:
+      - redis03
