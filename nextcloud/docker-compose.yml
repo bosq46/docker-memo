@@ -1,0 +1,27 @@
+version: '3'
+services:
+  nextcloud:
+    #image: nextcloud:23.0.0-fpm
+    image: nextcloud:latest
+    volumes:
+      - ./nextcloud/html:/var/www/html
+    ports:
+      - 80:80
+    depends_on:
+      - db
+    restart: always
+  db:
+    image: mariadb
+    volumes:
+      - ./mysql/db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_USER=nextcloud
+    command:
+      - "--character-set-server=utf8mb4"
+      - "--collation-server=utf8mb4_unicode_ci"
+      - "--innodb_strict_mode=OFF"
+      - "--innodb_read_only_compressed=OFF"
+    restart: always
