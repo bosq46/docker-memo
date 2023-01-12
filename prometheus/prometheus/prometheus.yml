@@ -19,5 +19,5 @@ scrape_configs:
     static_configs:
       - targets:
         -  prometheus:9090
-        -  node-exporter:9100
+        -  exporter:9100
 
