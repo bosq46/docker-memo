@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 services:
   prometheus:
     image: prom/prometheus:v2.40.1
@@ -24,4 +24,11 @@ services:
     ports:
       - 9093:9093
     restart: always
-
+  mailhog:
+    image: mailhog/mailhog:v1.0.1
+    volumes:
+      - ./alertmanager:/etc/alertmanager
+    ports:
+      - 8025:8025
+      # - 1025:1025
+    restart: always
