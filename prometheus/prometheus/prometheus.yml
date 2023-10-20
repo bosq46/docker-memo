@@ -1,11 +1,19 @@
 global:
-  scrape_interval:     15s
-  evaluation_interval: 15s
+  scrape_interval: 15s # default: 15s
+  scrape_timeout: 10s # default: 10s
+  evaluation_interval: 15s # default: 15s
   external_labels:
-      monitor: 'codelab-monitor'
+    env: dev
 
 rule_files:
-  - /etc/prometheus/alert.rules
+  - /etc/prometheus/rules/alerting_rule.yml
+
+alerting:
+  alertmanagers:
+    - scheme: http
+      static_configs:
+      - targets:
+        - alertmanager:9093
 
 scrape_configs:
   - job_name: 'prometheus'
@@ -21,10 +29,3 @@ scrape_configs:
     static_configs:
       - targets:
         -  localhost:9999
-
-alerting:
-  alertmanagers:
-    - scheme: http
-      static_configs:
-      - targets:
-        - alertmanager:9093
